@@ -5,7 +5,7 @@ namespace IntegradorSofftek.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class TrabajoController : ControllerBase
     {
     }
 }
