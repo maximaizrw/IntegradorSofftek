@@ -1,8 +1,11 @@
-﻿namespace IntegradorSofftek.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace IntegradorSofftek.Models
 {
     public class Usuario
     {
-        public int CodUsuario { get; set; }
+        [Column("codUsuario")]
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public int Dni { get; set; }
         public TipoUsuario Tipo { get; set; }

@@ -7,5 +7,6 @@ namespace IntegradorSofftek.Controllers
     [ApiController]
     public class ServicioController : ControllerBase
     {
+
     }
 }
