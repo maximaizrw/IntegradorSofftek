@@ -2,7 +2,7 @@
 {
     public class TrabajoDTO
     {
-        public int CodTrabajo { get; set; }
+        public int Id { get; set; }
         public DateTime Fecha { get; set; }
         public int CodProyecto { get; set; }
         public int CodServicio { get; set; }

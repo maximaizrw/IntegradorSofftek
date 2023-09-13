@@ -4,11 +4,10 @@ namespace IntegradorSofftek.DTOs
 {
     public class UsuarioDTO
     {
-        public int CodUsuario { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public int Dni { get; set; }
         public TipoUsuario Tipo { get; set; }
-        public string Clave { get; set; }
     }
 
     public enum TipoUsuario

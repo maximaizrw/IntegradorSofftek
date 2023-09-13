@@ -4,9 +4,9 @@ namespace IntegradorSofftek.DTOs
 {
     public class ProyectoDTO
     {
-        public int CodProyecto { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
-        public string Dirección { get; set; }
+        public string Direccion { get; set; }
         public EstadoProyecto Estado { get; set; }
     }
 
