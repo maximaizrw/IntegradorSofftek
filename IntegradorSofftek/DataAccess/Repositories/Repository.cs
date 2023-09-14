@@ -1,4 +1,7 @@
-﻿namespace IntegradorSofftek.DataAccess.Repositories
+﻿using IntegradorSofftek.DataAccess.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
+namespace IntegradorSofftek.DataAccess.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -13,7 +16,5 @@
         {
             return await _context.Set<T>().ToListAsync();
         }
-
-
     }
 }
