@@ -16,5 +16,20 @@ namespace IntegradorSofftek.DataAccess.Repositories
         {
             return await _context.Set<T>().ToListAsync();
         }
+        public virtual async Task<bool> Insertar(T entity)
+        {
+            await _context.Set<T>().AddAsync(entity);
+            return true;
+        }
+
+        public virtual Task<bool> Modificar(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Task<bool> Eliminar(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

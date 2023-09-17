@@ -1,10 +1,29 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IntegradorSofftek.DTOs;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IntegradorSofftek.Models
 {
     public class Usuario
     {
+        public Usuario(RegistroDTO dto)
+        {
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            //Tipo = dto.Tipo;
+            Clave = dto.Clave;
+        }
+
+        public Usuario(RegistroDTO dto, int codUsuario)
+        {
+            CodUsuario = codUsuario;
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            //Tipo = dto.Tipo;
+            Clave = dto.Clave;
+        }
+        public Usuario() { }
+
         [Key]
         public int CodUsuario { get; set; }
         [Required]
