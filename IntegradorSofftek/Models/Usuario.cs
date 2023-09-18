@@ -1,6 +1,8 @@
 ﻿using IntegradorSofftek.DTOs;
+using IntegradorSofftek.Helpers;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 
 namespace IntegradorSofftek.Models
 {
@@ -10,8 +12,8 @@ namespace IntegradorSofftek.Models
         {
             Nombre = dto.Nombre;
             Dni = dto.Dni;
-            //Tipo = dto.Tipo;
-            Clave = dto.Clave;
+            RolId = 2;
+            Clave = PasswordEncryptHelper.EncryptPassword(dto.Clave);
         }
 
         public Usuario(RegistroDTO dto, int codUsuario)
@@ -19,8 +21,8 @@ namespace IntegradorSofftek.Models
             CodUsuario = codUsuario;
             Nombre = dto.Nombre;
             Dni = dto.Dni;
-            //Tipo = dto.Tipo;
-            Clave = dto.Clave;
+            RolId = dto.RolId;
+            Clave = PasswordEncryptHelper.EncryptPassword(dto.Clave);
         }
         public Usuario() { }
 
@@ -33,15 +35,11 @@ namespace IntegradorSofftek.Models
         [Column(TypeName = "int")]
         public int Dni { get; set; }
         [Required]
-        public TipoUsuario Tipo { get; set; }
-        [Required]
-        [Column(TypeName = "VARCHAR (100)")]
+        [Column(TypeName = "VARCHAR (250)")]
         public string Clave { get; set; }
-    }
-
-    public enum TipoUsuario
-    {
-        Administrador = 1,
-        Consultor = 2
+        [Required]
+        [Column("rol_id")]
+        public int RolId { get; set; }
+        public Rol? Rol { get; set; }
     }
 }

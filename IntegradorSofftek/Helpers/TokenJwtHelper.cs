@@ -19,8 +19,9 @@ namespace IntegradorSofftek.Helpers
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
-                 new Claim("Dni", usuario.Dni.ToString()),
+                new Claim("Dni", usuario.Dni.ToString()),
                 new Claim(ClaimTypes.NameIdentifier, usuario.CodUsuario.ToString()),
+                new Claim(ClaimTypes.Role, usuario.RolId.ToString()),
             };
 
             var identity = new ClaimsIdentity(claims, "NombreDeAutenticacion");

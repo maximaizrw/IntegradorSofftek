@@ -1,6 +1,8 @@
 ﻿using IntegradorSofftek.DataAccess.DatabaseSeeding;
 using IntegradorSofftek.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using Umsa.DataAccess.DatabaseSeeding;
 
 namespace IntegradorSofftek.DataAccess
 {
@@ -9,12 +11,14 @@ namespace IntegradorSofftek.DataAccess
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Rol> Roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var seeders = new List<IEntitySeeder>
             {
-                new UsuarioSeeder()
+                new UsuarioSeeder(),
+                new RolSeeder()
             };
 
             foreach (var seeder in seeders)
