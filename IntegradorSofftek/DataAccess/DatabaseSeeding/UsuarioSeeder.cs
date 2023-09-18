@@ -1,4 +1,5 @@
-﻿using IntegradorSofftek.Models;
+﻿using IntegradorSofftek.Helpers;
+using IntegradorSofftek.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntegradorSofftek.DataAccess.DatabaseSeeding
@@ -11,10 +12,10 @@ namespace IntegradorSofftek.DataAccess.DatabaseSeeding
                 new Usuario
                 {
                     CodUsuario = 1,
-                    Nombre = "Administrador",
-                    Dni = 12345678,
-                    Tipo = TipoUsuario.Administrador,
-                    Clave = "123456"
+                    Nombre = "admin",
+                    Dni = 1234,
+                    Clave = PasswordEncryptHelper.EncryptPassword("1234"),
+                    RolId = 1
                 }
                 );
 

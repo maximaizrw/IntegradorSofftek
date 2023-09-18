@@ -1,5 +1,6 @@
 ﻿using IntegradorSofftek.DataAccess.Repositories.Interfaces;
 using IntegradorSofftek.DTOs;
+using IntegradorSofftek.Helpers;
 using IntegradorSofftek.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +22,6 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
             usuario.Nombre = modificarUsuario.Nombre;
             usuario.Dni = modificarUsuario.Dni;
-            usuario.Tipo = modificarUsuario.Tipo;
             usuario.Clave = modificarUsuario.Clave;
 
             _context.Usuarios.Update(usuario);
@@ -40,7 +40,7 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
         public async Task<Usuario?> AuthenticateCredentials(AuthenticateDTO dto)
         {
-            return await _context.Usuarios.SingleOrDefaultAsync(x => x.Dni == dto.Dni && x.Clave == dto.Clave);
+            return await _context.Usuarios.SingleOrDefaultAsync(x => x.Dni == dto.Dni && x.Clave == PasswordEncryptHelper.EncryptPassword(dto.Clave));
         }
 
     }

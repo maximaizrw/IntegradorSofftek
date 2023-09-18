@@ -5,6 +5,7 @@ namespace IntegradorSofftek.Services
     public interface IUnitOfWork
     {
         public UsuarioRepository UsuarioRepository { get; }
+        public RolRepository RolRepository { get; }
 
         Task<int> Complete();
     }
