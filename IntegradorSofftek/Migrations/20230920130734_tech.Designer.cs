@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegradorSofftek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230918153552_tech")]
+    [Migration("20230920130734_tech")]
     partial class tech
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,6 +67,45 @@ namespace IntegradorSofftek.Migrations
                         });
                 });
 
+            modelBuilder.Entity("IntegradorSofftek.Models.Servicio", b =>
+                {
+                    b.Property<int>("CodServicio")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodServicio"), 1L, 1);
+
+                    b.Property<string>("Descr")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("ValorHora")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("CodServicio");
+
+                    b.ToTable("Servicios");
+
+                    b.HasData(
+                        new
+                        {
+                            CodServicio = 1,
+                            Descr = "Servicio 1",
+                            Estado = true,
+                            ValorHora = 10000m
+                        },
+                        new
+                        {
+                            CodServicio = 2,
+                            Descr = "Servicio 2",
+                            Estado = true,
+                            ValorHora = 20000m
+                        });
+                });
+
             modelBuilder.Entity("IntegradorSofftek.Models.Usuario", b =>
                 {
                     b.Property<int>("CodUsuario")
@@ -100,7 +139,7 @@ namespace IntegradorSofftek.Migrations
                         new
                         {
                             CodUsuario = 1,
-                            Clave = "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+                            Clave = "cb096c1ca77084ae25d67db3826eba376c48cf53aa308e30ccf52179628f88e8",
                             Dni = 1234,
                             Nombre = "admin",
                             RolId = 1

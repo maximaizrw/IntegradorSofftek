@@ -1,4 +1,5 @@
 ﻿using IntegradorSofftek.DTOs;
+using IntegradorSofftek.Infraestructure;
 using IntegradorSofftek.Models;
 using IntegradorSofftek.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -18,11 +19,11 @@ namespace IntegradorSofftek.Controllers
 
         [HttpGet]
         [Authorize(Policy = "Administrador")]
-        public async Task<ActionResult<IEnumerable<Rol>>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var Roles = await _unitOfWork.RolRepository.GetAll();
 
-            return Roles;
+            return ResponseFactory.CreateSuccessResponse(200, Roles);
         }
 
         [HttpPost]
@@ -32,24 +33,27 @@ namespace IntegradorSofftek.Controllers
             var Rol = new Rol(dto);
             await _unitOfWork.RolRepository.Insertar(Rol);
             await _unitOfWork.Complete();
-            return Ok(true);
+            return ResponseFactory.CreateSuccessResponse(201, "Rol registrado con exito!");
         }
 
         [Authorize(Policy = "Administrador")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Modificar([FromRoute] int id, Rol rol)
+        public async Task<IActionResult> Modificar([FromRoute] int id, RolDTO dto)
         {
-            var result = await _unitOfWork.RolRepository.Modificar(rol);
+            var Rol = new Rol(dto, id);
+            var result = await _unitOfWork.RolRepository.Modificar(Rol);
+            if (!result) return ResponseFactory.CreateErrorResponse(500, "No se encontro el Rol");
             await _unitOfWork.Complete();
-            return Ok(true);
+            return ResponseFactory.CreateSuccessResponse(200, "Rol modificado con exito!");
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Eliminar([FromRoute] int id)
         {
             var result = await _unitOfWork.RolRepository.Eliminar(id);
+            if (!result) return ResponseFactory.CreateErrorResponse(500, "No se encontro el Rol");
             await _unitOfWork.Complete();
-            return Ok(true);
+            return ResponseFactory.CreateSuccessResponse(200, "Rol eliminado con exito!");
         }
     }
 }

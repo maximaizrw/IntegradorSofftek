@@ -25,5 +25,14 @@ namespace IntegradorSofftek.DataAccess.Repositories
             _context.Roles.Update(Rol);
             return true;
         }
+
+        public override async Task<bool> Eliminar(int id)
+        {
+            var Rol = await _context.Roles.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (Rol != null)
+                _context.Roles.Remove(Rol);
+
+            return true;
+        }
     }
 }

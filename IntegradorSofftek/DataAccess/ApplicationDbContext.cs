@@ -12,13 +12,15 @@ namespace IntegradorSofftek.DataAccess
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Roles { get; set; }
+        public DbSet<Servicio> Servicios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var seeders = new List<IEntitySeeder>
             {
                 new UsuarioSeeder(),
-                new RolSeeder()
+                new RolSeeder(),
+                new ServicioSeeder()
             };
 
             foreach (var seeder in seeders)
