@@ -13,7 +13,7 @@ namespace IntegradorSofftek.Models
             Nombre = dto.Nombre;
             Dni = dto.Dni;
             RolId = 2;
-            Clave = PasswordEncryptHelper.EncryptPassword(dto.Clave);
+            Clave = PasswordEncryptHelper.EncryptPassword(dto.Clave, dto.Dni);
         }
 
         public Usuario(RegistroDTO dto, int codUsuario)
@@ -22,7 +22,7 @@ namespace IntegradorSofftek.Models
             Nombre = dto.Nombre;
             Dni = dto.Dni;
             RolId = dto.RolId;
-            Clave = PasswordEncryptHelper.EncryptPassword(dto.Clave);
+            Clave = PasswordEncryptHelper.EncryptPassword(dto.Clave, dto.Dni);
         }
         public Usuario() { }
 

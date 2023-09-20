@@ -14,7 +14,7 @@ namespace IntegradorSofftek.DataAccess.DatabaseSeeding
                     CodUsuario = 1,
                     Nombre = "admin",
                     Dni = 1234,
-                    Clave = PasswordEncryptHelper.EncryptPassword("1234"),
+                    Clave = PasswordEncryptHelper.EncryptPassword("1234",1234),
                     RolId = 1
                 }
                 );
