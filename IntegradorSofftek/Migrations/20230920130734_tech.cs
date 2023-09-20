@@ -24,6 +24,21 @@ namespace IntegradorSofftek.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Servicios",
+                columns: table => new
+                {
+                    CodServicio = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Descr = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: false),
+                    ValorHora = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Servicios", x => x.CodServicio);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Usuarios",
                 columns: table => new
                 {
@@ -48,17 +63,25 @@ namespace IntegradorSofftek.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "rol_id", "rol_activo", "rol_descripcion", "rol_nombre" },
-                values: new object[] { 1, true, "Admin", "Admin" });
+                values: new object[,]
+                {
+                    { 1, true, "Admin", "Admin" },
+                    { 2, true, "Consulta", "Consulta" }
+                });
 
             migrationBuilder.InsertData(
-                table: "Roles",
-                columns: new[] { "rol_id", "rol_activo", "rol_descripcion", "rol_nombre" },
-                values: new object[] { 2, true, "Consulta", "Consulta" });
+                table: "Servicios",
+                columns: new[] { "CodServicio", "Descr", "Estado", "ValorHora" },
+                values: new object[,]
+                {
+                    { 1, "Servicio 1", true, 10000m },
+                    { 2, "Servicio 2", true, 20000m }
+                });
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "CodUsuario", "Clave", "Dni", "Nombre", "rol_id" },
-                values: new object[] { 1, "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4", 1234, "admin", 1 });
+                values: new object[] { 1, "cb096c1ca77084ae25d67db3826eba376c48cf53aa308e30ccf52179628f88e8", 1234, "admin", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_rol_id",
@@ -68,6 +91,9 @@ namespace IntegradorSofftek.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Servicios");
+
             migrationBuilder.DropTable(
                 name: "Usuarios");
 
