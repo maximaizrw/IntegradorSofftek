@@ -10,6 +10,7 @@ namespace IntegradorSofftek.Models
         [Required]
         public string Descr { get; set; }
         [Required]
+        [Column(TypeName = "bit")]
         public bool Estado { get; set; }
         [Required]
         public decimal ValorHora { get; set; }

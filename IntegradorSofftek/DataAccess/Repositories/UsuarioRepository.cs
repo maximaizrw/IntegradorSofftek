@@ -40,8 +40,15 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
         public async Task<Usuario?> AuthenticateCredentials(AuthenticateDTO dto)
         {
-            return await _context.Usuarios.SingleOrDefaultAsync(x => x.Dni == dto.Dni && x.Clave == PasswordEncryptHelper.EncryptPassword(dto.Clave));
+            return await _context.Usuarios.SingleOrDefaultAsync(x => x.Dni == dto.Dni && x.Clave == PasswordEncryptHelper.EncryptPassword(dto.Clave, dto.Dni));
         }
+
+        public async Task<bool> UserExist(int dni)
+        {
+            return await _context.Usuarios.AnyAsync(x => x.Dni == dni);
+        }
+
+
 
     }
 }
