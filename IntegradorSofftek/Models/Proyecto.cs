@@ -1,10 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using IntegradorSofftek.DTOs;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IntegradorSofftek.Models
 {
     public class Proyecto
     {
+        public Proyecto() { }
+
+        public Proyecto(ProyectoDTO dto)
+        {
+            Nombre = dto.Nombre;
+            Direccion = dto.Direccion;
+            Estado = (EstadoProyecto)dto.Estado;
+        }
+
+        public Proyecto(ProyectoDTO dto, int codProyecto)
+        {
+            CodProyecto = codProyecto;
+            Nombre = dto.Nombre;
+            Direccion = dto.Direccion;
+            Estado = (EstadoProyecto)dto.Estado;
+        }
+
         [Key]
         public int CodProyecto { get; set; }
         [Required]
@@ -13,6 +31,7 @@ namespace IntegradorSofftek.Models
         [Required]
         public string Direccion { get; set; }
         [Required]
+        [Column(TypeName = "int")]
         public EstadoProyecto Estado { get; set; }
     }
 

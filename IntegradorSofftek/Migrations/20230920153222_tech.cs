@@ -9,6 +9,21 @@ namespace IntegradorSofftek.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Proyectos",
+                columns: table => new
+                {
+                    CodProyecto = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "VARCHAR (100)", nullable: false),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proyectos", x => x.CodProyecto);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -61,6 +76,15 @@ namespace IntegradorSofftek.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Proyectos",
+                columns: new[] { "CodProyecto", "Direccion", "Estado", "Nombre" },
+                values: new object[,]
+                {
+                    { 1, "Direccion 1", 1, "Proyecto 1" },
+                    { 2, "Direccion 2", 3, "Proyecto 2" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "rol_id", "rol_activo", "rol_descripcion", "rol_nombre" },
                 values: new object[,]
@@ -91,6 +115,9 @@ namespace IntegradorSofftek.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Proyectos");
+
             migrationBuilder.DropTable(
                 name: "Servicios");
 

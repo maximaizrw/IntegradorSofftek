@@ -21,6 +21,46 @@ namespace IntegradorSofftek.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("IntegradorSofftek.Models.Proyecto", b =>
+                {
+                    b.Property<int>("CodProyecto")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodProyecto"), 1L, 1);
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR (100)");
+
+                    b.HasKey("CodProyecto");
+
+                    b.ToTable("Proyectos");
+
+                    b.HasData(
+                        new
+                        {
+                            CodProyecto = 1,
+                            Direccion = "Direccion 1",
+                            Estado = 1,
+                            Nombre = "Proyecto 1"
+                        },
+                        new
+                        {
+                            CodProyecto = 2,
+                            Direccion = "Direccion 2",
+                            Estado = 3,
+                            Nombre = "Proyecto 2"
+                        });
+                });
+
             modelBuilder.Entity("IntegradorSofftek.Models.Rol", b =>
                 {
                     b.Property<int>("Id")
