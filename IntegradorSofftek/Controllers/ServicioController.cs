@@ -3,6 +3,7 @@ using IntegradorSofftek.Infraestructure;
 using IntegradorSofftek.Services;
 using IntegradorSofftek.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IntegradorSofftek.Controllers
 {
@@ -26,6 +27,7 @@ namespace IntegradorSofftek.Controllers
 
         [HttpPost]
         [Route("Insertar")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Insert(ServicioDTO dto)
         { 
             var Servicio = new Servicio(dto);
@@ -35,6 +37,7 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpPut("{codServicio}")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Modificar([FromRoute] int codServicio, ServicioDTO dto)
         {
             var Servicio = new Servicio(dto, codServicio);
@@ -45,6 +48,7 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpDelete("{codServicio}")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Eliminar([FromRoute] int codServicio)
         {
             var result = await _unitOfWork.ServicioRepository.Eliminar(codServicio);

@@ -29,10 +29,6 @@ namespace IntegradorSofftek.Controllers
         [Route("Insertar")]
         public async Task<IActionResult> Insert(ProyectoDTO dto)
         {
-            if (!Enum.IsDefined(typeof(IntegradorSofftek.DTOs.EstadoProyecto), dto.Estado))
-            {
-                return ResponseFactory.CreateErrorResponse(400, "El estado no es válido");
-            }
             var Proyecto = new Proyecto(dto);
             await _unitOfWork.ProyectoRepository.Insertar(Proyecto);
             await _unitOfWork.Complete();

@@ -7,6 +7,8 @@ namespace IntegradorSofftek.DTOs
         public int CodUsuario { get; set; }
         public string Nombre { get; set; }
         public int Dni { get; set; }
+
+
     }
 
 }

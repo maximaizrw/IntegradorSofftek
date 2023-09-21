@@ -27,6 +27,7 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "Administrador")]
         [Route("Insertar")]
         public async Task<IActionResult> Insert(RolDTO dto)
         {
@@ -36,8 +37,8 @@ namespace IntegradorSofftek.Controllers
             return ResponseFactory.CreateSuccessResponse(201, "Rol registrado con exito!");
         }
 
-        [Authorize(Policy = "Administrador")]
         [HttpPut("{id}")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Modificar([FromRoute] int id, RolDTO dto)
         {
             var Rol = new Rol(dto, id);
@@ -48,6 +49,7 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Eliminar([FromRoute] int id)
         {
             var result = await _unitOfWork.RolRepository.Eliminar(id);
