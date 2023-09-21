@@ -12,23 +12,23 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
         public override async Task<bool> Modificar(Servicio modificarServicio)
         {
-            var Servicio = await _context.Servicios.FirstOrDefaultAsync(x => x.CodServicio == modificarServicio.CodServicio);
-            if (Servicio == null)
+            var servicio = await _context.Servicios.FirstOrDefaultAsync(x => x.CodServicio == modificarServicio.CodServicio);
+            if (servicio == null)
                 return false;
 
-            Servicio.Descr = modificarServicio.Descr;
-            Servicio.Estado = modificarServicio.Estado;
-            Servicio.ValorHora = modificarServicio.ValorHora;
+            servicio.Descr = modificarServicio.Descr;
+            servicio.Estado = modificarServicio.Estado;
+            servicio.ValorHora = modificarServicio.ValorHora;
 
-            _context.Servicios.Update(Servicio);
+            _context.Servicios.Update(servicio);
             return true;
         }
 
         public override async Task<bool> Eliminar(int codServicio)
         {
-            var Servicio = await _context.Servicios.Where(x => x.CodServicio == codServicio).FirstOrDefaultAsync();
-            if (Servicio != null)
-                _context.Servicios.Remove(Servicio);
+            var servicio = await _context.Servicios.Where(x => x.CodServicio == codServicio).FirstOrDefaultAsync();
+            if (servicio != null)
+                _context.Servicios.Remove(servicio);
 
             return true;
         }

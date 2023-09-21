@@ -12,7 +12,7 @@ namespace IntegradorSofftek.Models
         {
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
-            Estado = (EstadoProyecto)dto.Estado;
+            Estado = dto.Estado;
         }
 
         public Proyecto(ProyectoDTO dto, int codProyecto)
@@ -20,7 +20,7 @@ namespace IntegradorSofftek.Models
             CodProyecto = codProyecto;
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
-            Estado = (EstadoProyecto)dto.Estado;
+            Estado = dto.Estado;
         }
 
         [Key]

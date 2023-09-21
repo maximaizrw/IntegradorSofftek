@@ -29,6 +29,7 @@ namespace IntegradorSofftek.Controllers
 
         [HttpPost]
         [Route("Registrar")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Registro(RegistroDTO dto)
         {
             if (await _unitOfWork.UsuarioRepository.UserExist(dto.Dni)) return ResponseFactory.CreateErrorResponse(409, $"Ya existe un usuario registrado con el dni: {dto.Dni}");
@@ -39,6 +40,7 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpPut("{codUsuario}")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Modificar([FromRoute] int codUsuario, RegistroDTO dto)
         {
             var result = await _unitOfWork.UsuarioRepository.Modificar(new Usuario(dto, codUsuario));
@@ -50,6 +52,7 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpDelete("{codUsuario}")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Eliminar([FromRoute] int codUsuario)
         {
             var result = await _unitOfWork.UsuarioRepository.Eliminar(codUsuario);
