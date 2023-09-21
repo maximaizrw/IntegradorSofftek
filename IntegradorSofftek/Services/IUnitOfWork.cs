@@ -7,6 +7,7 @@ namespace IntegradorSofftek.Services
         public UsuarioRepository UsuarioRepository { get; }
         public RolRepository RolRepository { get; }
         public ServicioRepository ServicioRepository { get; }
+        public ProyectoRepository ProyectoRepository { get; }
 
         Task<int> Complete();
     }
