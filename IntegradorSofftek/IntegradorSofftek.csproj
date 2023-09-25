@@ -4,6 +4,8 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\Maxi\source\repos\maximaizrw\IntegradorSofftek\IntegradorSofftek\bin\Debug\net6.0\IntegradorSofftek.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

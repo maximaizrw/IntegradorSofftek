@@ -17,6 +17,11 @@ namespace IntegradorSofftek.Controllers
             _tokenJwtHelper = new TokenJwtHelper(configuration);
         }
 
+        /// <summary>
+        /// Se loguea un usuario
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>retorna el token del usuario</returns>
         [HttpPost]
         public async Task<IActionResult> Login(AuthenticateDTO dto)
         {

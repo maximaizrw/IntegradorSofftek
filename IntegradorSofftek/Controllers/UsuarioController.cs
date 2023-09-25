@@ -18,6 +18,10 @@ namespace IntegradorSofftek.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>
+        /// Devuelve todos los usuarios registrados
+        /// </summary>
+        /// <returns>retorna todos los usuarios</returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -26,6 +30,11 @@ namespace IntegradorSofftek.Controllers
             return ResponseFactory.CreateSuccessResponse(200, usuarios);
         }
 
+        /// <summary>
+        /// Devuelve un usuario por su id
+        /// </summary>
+        /// <param name="codUsuario"></param>
+        /// <returns>retorna un usuario</returns>
         [HttpGet("{codUsuario}")]
         [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int codUsuario)
@@ -37,6 +46,11 @@ namespace IntegradorSofftek.Controllers
             return ResponseFactory.CreateSuccessResponse(200, usuario);
         }
 
+        /// <summary>
+        /// Registra un usuario
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns>retorna un mensaje de exito o error</returns>
         [HttpPost]
         [Route("Registrar")]
         [Authorize(Policy = "Administrador")]
@@ -49,6 +63,12 @@ namespace IntegradorSofftek.Controllers
             return ResponseFactory.CreateSuccessResponse(201, "Usuario registrado con exito!");
         }
 
+        /// <summary>
+        /// Modificar un usuario
+        /// </summary>
+        /// <param name="codUsuario"></param>
+        /// <param name="dto"></param>
+        /// <returns>retorna un mensaje de exito o error</returns>
         [HttpPut("{codUsuario}")]
         [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Modificar([FromRoute] int codUsuario, RegistroDTO dto)
@@ -61,6 +81,11 @@ namespace IntegradorSofftek.Controllers
             return ResponseFactory.CreateSuccessResponse(200, "Usuario actualizado con exito!");
         }
 
+        /// <summary>
+        /// Eliminar un usuario
+        /// </summary>
+        /// <param name="codUsuario"></param>
+        /// <returns>retorna un mensaje de exito o error</returns>
         [HttpDelete("{codUsuario}")]
         [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Eliminar([FromRoute] int codUsuario)
