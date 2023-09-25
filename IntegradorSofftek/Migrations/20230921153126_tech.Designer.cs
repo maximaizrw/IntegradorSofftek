@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegradorSofftek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230921145431_tech")]
+    [Migration("20230921153126_tech")]
     partial class tech
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -186,7 +186,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 10,
                             CodProyecto = 1,
                             CodServicio = 1,
-                            Fecha = new DateTime(2023, 9, 21, 11, 54, 31, 160, DateTimeKind.Local).AddTicks(9812),
+                            Fecha = new DateTime(2023, 9, 21, 12, 31, 26, 463, DateTimeKind.Local).AddTicks(1867),
                             ValorHora = 10000m
                         },
                         new
@@ -195,7 +195,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 20,
                             CodProyecto = 2,
                             CodServicio = 2,
-                            Fecha = new DateTime(2023, 9, 21, 11, 54, 31, 160, DateTimeKind.Local).AddTicks(9826),
+                            Fecha = new DateTime(2023, 9, 21, 12, 31, 26, 463, DateTimeKind.Local).AddTicks(1883),
                             ValorHora = 20000m
                         });
                 });
@@ -220,8 +220,7 @@ namespace IntegradorSofftek.Migrations
                         .HasColumnType("VARCHAR (100)");
 
                     b.Property<int>("RolId")
-                        .HasColumnType("int")
-                        .HasColumnName("rol_id");
+                        .HasColumnType("int");
 
                     b.HasKey("CodUsuario");
 

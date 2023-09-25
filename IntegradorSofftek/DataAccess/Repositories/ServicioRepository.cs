@@ -10,6 +10,11 @@ namespace IntegradorSofftek.DataAccess.Repositories
         {
         }
 
+        public async Task<IEnumerable<Servicio>> GetAllActivos()
+        {
+            return await _context.Servicios.Where(x => x.Estado == true).ToListAsync();
+        }
+
         public override async Task<bool> Modificar(Servicio modificarServicio)
         {
             var servicio = await _context.Servicios.FirstOrDefaultAsync(x => x.CodServicio == modificarServicio.CodServicio);

@@ -19,12 +19,22 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAll();
 
             return ResponseFactory.CreateSuccessResponse(200, usuarios);
+        }
+
+        [HttpGet("{codUsuario}")]
+        [Authorize]
+        public async Task<IActionResult> GetById([FromRoute] int codUsuario)
+        {
+            var usuario = await _unitOfWork.UsuarioRepository.GetById(codUsuario);
+
+            if (usuario == null) return ResponseFactory.CreateErrorResponse(404, "No se encontro el usuario");
+
+            return ResponseFactory.CreateSuccessResponse(200, usuario);
         }
 
         [HttpPost]
