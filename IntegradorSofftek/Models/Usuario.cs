@@ -36,10 +36,11 @@ namespace IntegradorSofftek.Models
         public int Dni { get; set; }
         [Required]
         [Column(TypeName = "VARCHAR (250)")]
+
         public string Clave { get; set; }
         [Required]
-        [Column("rol_id")]
         public int RolId { get; set; }
+        [ForeignKey("RolId")]
         public Rol? Rol { get; set; }
     }
 }

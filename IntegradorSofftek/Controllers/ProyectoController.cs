@@ -2,6 +2,7 @@
 using IntegradorSofftek.Infraestructure;
 using IntegradorSofftek.Models;
 using IntegradorSofftek.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntegradorSofftek.Controllers
@@ -25,8 +26,19 @@ namespace IntegradorSofftek.Controllers
             return ResponseFactory.CreateSuccessResponse(200, proyectos);
         }
 
+
+
+        [HttpGet("{codProyecto}")]
+        public async Task<IActionResult> GetById([FromRoute] int codProyecto)
+        {
+            var proyecto = await _unitOfWork.ProyectoRepository.GetById(codProyecto);
+            if (proyecto == null) return ResponseFactory.CreateErrorResponse(500, "No se encontro el proyecto");
+            return ResponseFactory.CreateSuccessResponse(200, proyecto);
+        }
+
         [HttpPost]
         [Route("Insertar")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Insert(ProyectoDTO dto)
         {
             var Proyecto = new Proyecto(dto);
@@ -36,6 +48,7 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpPut("{codProyecto}")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Modificar([FromRoute] int codProyecto, ProyectoDTO dto)
         {
             var proyecto = new Proyecto(dto, codProyecto);
@@ -46,6 +59,7 @@ namespace IntegradorSofftek.Controllers
         }
 
         [HttpDelete("{codProyecto}")]
+        [Authorize(Policy = "Administrador")]
         public async Task<IActionResult> Eliminar([FromRoute] int codProyecto)
         {
             var result = await _unitOfWork.ProyectoRepository.Eliminar(codProyecto);

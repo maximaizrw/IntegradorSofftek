@@ -63,14 +63,14 @@ namespace IntegradorSofftek.Migrations
                     Nombre = table.Column<string>(type: "VARCHAR (100)", nullable: false),
                     Dni = table.Column<int>(type: "int", nullable: false),
                     Clave = table.Column<string>(type: "VARCHAR (250)", nullable: false),
-                    rol_id = table.Column<int>(type: "int", nullable: false)
+                    RolId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.CodUsuario);
                     table.ForeignKey(
-                        name: "FK_Usuarios_Roles_rol_id",
-                        column: x => x.rol_id,
+                        name: "FK_Usuarios_Roles_RolId",
+                        column: x => x.RolId,
                         principalTable: "Roles",
                         principalColumn: "rol_id",
                         onDelete: ReferentialAction.Cascade);
@@ -135,16 +135,16 @@ namespace IntegradorSofftek.Migrations
             migrationBuilder.InsertData(
                 table: "Trabajos",
                 columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 21, 11, 54, 31, 160, DateTimeKind.Local).AddTicks(9812), 10000m });
+                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 21, 12, 31, 26, 463, DateTimeKind.Local).AddTicks(1867), 10000m });
 
             migrationBuilder.InsertData(
                 table: "Trabajos",
                 columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 21, 11, 54, 31, 160, DateTimeKind.Local).AddTicks(9826), 20000m });
+                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 21, 12, 31, 26, 463, DateTimeKind.Local).AddTicks(1883), 20000m });
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
-                columns: new[] { "CodUsuario", "Clave", "Dni", "Nombre", "rol_id" },
+                columns: new[] { "CodUsuario", "Clave", "Dni", "Nombre", "RolId" },
                 values: new object[] { 1, "cb096c1ca77084ae25d67db3826eba376c48cf53aa308e30ccf52179628f88e8", 1234, "admin", 1 });
 
             migrationBuilder.CreateIndex(
@@ -158,9 +158,9 @@ namespace IntegradorSofftek.Migrations
                 column: "CodServicio");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_rol_id",
+                name: "IX_Usuarios_RolId",
                 table: "Usuarios",
-                column: "rol_id");
+                column: "RolId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

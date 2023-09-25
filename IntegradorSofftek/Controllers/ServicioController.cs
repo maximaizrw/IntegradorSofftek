@@ -25,6 +25,26 @@ namespace IntegradorSofftek.Controllers
             return ResponseFactory.CreateSuccessResponse(200, servicios);
         }
 
+        // Obtener todos los servicios activos
+        [HttpGet]
+        [Route("GetAllActivos")]
+        public async Task<IActionResult> GetAllActivos()
+        {
+            var servicios = await _unitOfWork.ServicioRepository.GetAllActivos();
+
+            return ResponseFactory.CreateSuccessResponse(200, servicios);
+        }
+
+        [HttpGet("{codServicio}")]
+        public async Task<IActionResult> GetById([FromRoute] int codServicio)
+        {
+            var servicio = await _unitOfWork.ServicioRepository.GetById(codServicio);
+            if (servicio == null) return ResponseFactory.CreateErrorResponse(500, "No se encontro el servicio");
+            return ResponseFactory.CreateSuccessResponse(200, servicio);
+        }
+
+        
+
         [HttpPost]
         [Route("Insertar")]
         [Authorize(Policy = "Administrador")]
