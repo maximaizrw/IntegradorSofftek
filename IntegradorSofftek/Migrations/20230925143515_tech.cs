@@ -10,18 +10,16 @@ namespace IntegradorSofftek.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Proyectos",
+                name: "EstadosProyecto",
                 columns: table => new
                 {
-                    CodProyecto = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "VARCHAR (100)", nullable: false),
-                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Estado = table.Column<int>(type: "int", nullable: false)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Proyectos", x => x.CodProyecto);
+                    table.PrimaryKey("PK_EstadosProyecto", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,6 +50,27 @@ namespace IntegradorSofftek.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Servicios", x => x.CodServicio);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Proyectos",
+                columns: table => new
+                {
+                    CodProyecto = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "VARCHAR (100)", nullable: false),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EstadoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Proyectos", x => x.CodProyecto);
+                    table.ForeignKey(
+                        name: "FK_Proyectos_EstadosProyecto_EstadoId",
+                        column: x => x.EstadoId,
+                        principalTable: "EstadosProyecto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -106,12 +125,13 @@ namespace IntegradorSofftek.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Proyectos",
-                columns: new[] { "CodProyecto", "Direccion", "Estado", "Nombre" },
+                table: "EstadosProyecto",
+                columns: new[] { "Id", "Descripcion" },
                 values: new object[,]
                 {
-                    { 1, "Direccion 1", 1, "Proyecto 1" },
-                    { 2, "Direccion 2", 3, "Proyecto 2" }
+                    { 1, "Pendiente" },
+                    { 2, "Confirmado" },
+                    { 3, "Terminado" }
                 });
 
             migrationBuilder.InsertData(
@@ -133,19 +153,34 @@ namespace IntegradorSofftek.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Trabajos",
-                columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 21, 12, 31, 26, 463, DateTimeKind.Local).AddTicks(1867), 10000m });
+                table: "Proyectos",
+                columns: new[] { "CodProyecto", "Direccion", "EstadoId", "Nombre" },
+                values: new object[] { 1, "Direccion 1", 1, "Proyecto 1" });
 
             migrationBuilder.InsertData(
-                table: "Trabajos",
-                columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 21, 12, 31, 26, 463, DateTimeKind.Local).AddTicks(1883), 20000m });
+                table: "Proyectos",
+                columns: new[] { "CodProyecto", "Direccion", "EstadoId", "Nombre" },
+                values: new object[] { 2, "Direccion 2", 2, "Proyecto 2" });
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "CodUsuario", "Clave", "Dni", "Nombre", "RolId" },
                 values: new object[] { 1, "cb096c1ca77084ae25d67db3826eba376c48cf53aa308e30ccf52179628f88e8", 1234, "admin", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Trabajos",
+                columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
+                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 25, 11, 35, 15, 327, DateTimeKind.Local).AddTicks(5107), 10000m });
+
+            migrationBuilder.InsertData(
+                table: "Trabajos",
+                columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
+                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 25, 11, 35, 15, 327, DateTimeKind.Local).AddTicks(5119), 20000m });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Proyectos_EstadoId",
+                table: "Proyectos",
+                column: "EstadoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trabajos_CodProyecto",
@@ -179,6 +214,9 @@ namespace IntegradorSofftek.Migrations
 
             migrationBuilder.DropTable(
                 name: "Roles");
+
+            migrationBuilder.DropTable(
+                name: "EstadosProyecto");
         }
     }
 }

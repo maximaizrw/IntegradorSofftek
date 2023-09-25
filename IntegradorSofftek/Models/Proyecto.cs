@@ -12,7 +12,7 @@ namespace IntegradorSofftek.Models
         {
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
-            Estado = dto.Estado;
+            EstadoId = dto.EstadoId;
         }
 
         public Proyecto(ProyectoDTO dto, int codProyecto)
@@ -20,7 +20,7 @@ namespace IntegradorSofftek.Models
             CodProyecto = codProyecto;
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
-            Estado = dto.Estado;
+            EstadoId = dto.EstadoId;
         }
 
         [Key]
@@ -32,13 +32,11 @@ namespace IntegradorSofftek.Models
         public string Direccion { get; set; }
         [Required]
         [Column(TypeName = "int")]
-        public EstadoProyecto Estado { get; set; }
+        public int EstadoId { get; set; }
+        [ForeignKey("EstadoId")]
+        public EstadoProyecto? EstadoProyecto { get; set; }
+
     }
 
-    public enum EstadoProyecto
-    {
-        Pendiente = 1,
-        Confirmado = 2,
-        Terminado = 3
-    }
+
 }

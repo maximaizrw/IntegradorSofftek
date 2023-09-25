@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegradorSofftek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230921153126_tech")]
+    [Migration("20230925143515_tech")]
     partial class tech
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,40 @@ namespace IntegradorSofftek.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("IntegradorSofftek.Models.EstadoProyecto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EstadosProyecto");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Pendiente"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Confirmado"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descripcion = "Terminado"
+                        });
+                });
 
             modelBuilder.Entity("IntegradorSofftek.Models.Proyecto", b =>
                 {
@@ -36,7 +70,7 @@ namespace IntegradorSofftek.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Estado")
+                    b.Property<int>("EstadoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Nombre")
@@ -45,6 +79,8 @@ namespace IntegradorSofftek.Migrations
 
                     b.HasKey("CodProyecto");
 
+                    b.HasIndex("EstadoId");
+
                     b.ToTable("Proyectos");
 
                     b.HasData(
@@ -52,14 +88,14 @@ namespace IntegradorSofftek.Migrations
                         {
                             CodProyecto = 1,
                             Direccion = "Direccion 1",
-                            Estado = 1,
+                            EstadoId = 1,
                             Nombre = "Proyecto 1"
                         },
                         new
                         {
                             CodProyecto = 2,
                             Direccion = "Direccion 2",
-                            Estado = 3,
+                            EstadoId = 2,
                             Nombre = "Proyecto 2"
                         });
                 });
@@ -186,7 +222,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 10,
                             CodProyecto = 1,
                             CodServicio = 1,
-                            Fecha = new DateTime(2023, 9, 21, 12, 31, 26, 463, DateTimeKind.Local).AddTicks(1867),
+                            Fecha = new DateTime(2023, 9, 25, 11, 35, 15, 327, DateTimeKind.Local).AddTicks(5107),
                             ValorHora = 10000m
                         },
                         new
@@ -195,7 +231,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 20,
                             CodProyecto = 2,
                             CodServicio = 2,
-                            Fecha = new DateTime(2023, 9, 21, 12, 31, 26, 463, DateTimeKind.Local).AddTicks(1883),
+                            Fecha = new DateTime(2023, 9, 25, 11, 35, 15, 327, DateTimeKind.Local).AddTicks(5119),
                             ValorHora = 20000m
                         });
                 });
@@ -237,6 +273,17 @@ namespace IntegradorSofftek.Migrations
                             Nombre = "admin",
                             RolId = 1
                         });
+                });
+
+            modelBuilder.Entity("IntegradorSofftek.Models.Proyecto", b =>
+                {
+                    b.HasOne("IntegradorSofftek.Models.EstadoProyecto", "EstadoProyecto")
+                        .WithMany()
+                        .HasForeignKey("EstadoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EstadoProyecto");
                 });
 
             modelBuilder.Entity("IntegradorSofftek.Models.Trabajo", b =>
