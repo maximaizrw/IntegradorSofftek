@@ -6,6 +6,6 @@ namespace IntegradorSofftek.DTOs
     {
         public string Nombre { get; set; }
         public string Direccion { get; set;}
-        public EstadoProyecto Estado { get; set; }
+        public int EstadoId { get; set; }
     }
 }

@@ -36,6 +36,14 @@ namespace IntegradorSofftek.Controllers
             return ResponseFactory.CreateSuccessResponse(200, proyecto);
         }
 
+        [HttpGet("estado/{estadoId}")]
+        public async Task<IActionResult> GetByEstado([FromRoute] int estadoId)
+        {
+            var proyectos = await _unitOfWork.ProyectoRepository.GetByEstado(estadoId);
+            if (proyectos == null) return ResponseFactory.CreateErrorResponse(500, "No se encontro el proyecto");
+            return ResponseFactory.CreateSuccessResponse(200, proyectos);
+        }
+
         [HttpPost]
         [Route("Insertar")]
         [Authorize(Policy = "Administrador")]
