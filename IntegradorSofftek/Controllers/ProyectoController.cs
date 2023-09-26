@@ -66,9 +66,8 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="dto">Los datos del proyecto que se va a insertar.</param>
         /// <returns>Un mensaje de éxito indicando que el proyecto se registró con éxito.</returns>
-        [HttpPost]
-        [Route("Insertar")]
         [Authorize(Policy = "Administrador")]
+        [HttpPost]
         public async Task<IActionResult> Insert(ProyectoDTO dto)
         {
             var proyecto = new Proyecto(dto);
@@ -83,8 +82,8 @@ namespace IntegradorSofftek.Controllers
         /// <param name="codProyecto">El ID del proyecto que se va a modificar.</param>
         /// <param name="dto">Los datos actualizados del proyecto.</param>
         /// <returns>Un mensaje de éxito indicando que el proyecto se modificó con éxito.</returns>
-        [HttpPut("{codProyecto}")]
         [Authorize(Policy = "Administrador")]
+        [HttpPut("{codProyecto}")]
         public async Task<IActionResult> Modificar([FromRoute] int codProyecto, ProyectoDTO dto)
         {
             var proyecto = new Proyecto(dto, codProyecto);
@@ -102,8 +101,8 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="codProyecto">El ID del proyecto que se va a eliminar.</param>
         /// <returns>Un mensaje de éxito indicando que el proyecto se eliminó con éxito.</returns>
-        [HttpDelete("{codProyecto}")]
         [Authorize(Policy = "Administrador")]
+        [HttpDelete("{codProyecto}")]
         public async Task<IActionResult> Eliminar([FromRoute] int codProyecto)
         {
             var result = await _unitOfWork.ProyectoRepository.Eliminar(codProyecto);

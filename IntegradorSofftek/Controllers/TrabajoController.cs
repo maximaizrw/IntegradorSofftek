@@ -1,4 +1,5 @@
 ﻿using IntegradorSofftek.DTOs;
+using IntegradorSofftek.Helpers;
 using IntegradorSofftek.Infraestructure;
 using IntegradorSofftek.Models;
 using IntegradorSofftek.Services;
@@ -23,11 +24,17 @@ namespace IntegradorSofftek.Controllers
         /// Obtiene todos los trabajos.
         /// </summary>
         /// <returns>Una lista de todos los trabajos.</returns>
+        [Authorize]
         [HttpGet]
-        public async Task<IActionResult> ObtenerTrabajos()
+        public async Task<IActionResult> Getall()
         {
-            var trabajos = await _unitOfWork.TrabajoRepository.ObtenerTrabajos();
-            return ResponseFactory.CreateSuccessResponse(200, trabajos);
+            var trabajos = await _unitOfWork.TrabajoRepository.GetAll();
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateTrabajos = PaginateHelper.Paginate<Trabajo>((List<Trabajo>)trabajos, pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateTrabajos);
         }
 
         /// <summary>
@@ -35,6 +42,7 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="codTrabajo">El ID del trabajo que se desea obtener.</param>
         /// <returns>El trabajo correspondiente al ID proporcionado.</returns>
+        [Authorize]
         [HttpGet("{codTrabajo}")]
         public async Task<IActionResult> ObtenerTrabajo([FromRoute] int codTrabajo)
         {
@@ -47,9 +55,8 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="dto">Los datos del trabajo que se va a insertar.</param>
         /// <returns>Un mensaje de éxito indicando que el trabajo se registró con éxito.</returns>
-        [HttpPost]
         [Authorize(Policy = "Administrador")]
-        [Route("Insertar")]
+        [HttpPost]
         public async Task<IActionResult> Insertar(TrabajoDTO dto)
         {
             var trabajo = new Trabajo(dto);
@@ -64,8 +71,8 @@ namespace IntegradorSofftek.Controllers
         /// <param name="codTrabajo">El ID del trabajo que se va a modificar.</param>
         /// <param name="dto">Los datos actualizados del trabajo.</param>
         /// <returns>Un mensaje de éxito indicando que el trabajo se modificó con éxito.</returns>
-        [HttpPut("{codTrabajo}")]
         [Authorize(Policy = "Administrador")]
+        [HttpPut("{codTrabajo}")]
         public async Task<IActionResult> Modificar([FromRoute] int codTrabajo, TrabajoDTO dto)
         {
             var trabajo = new Trabajo(dto, codTrabajo);
@@ -83,8 +90,8 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="codTrabajo">El ID del trabajo que se va a eliminar.</param>
         /// <returns>Un mensaje de éxito indicando que el trabajo se eliminó con éxito.</returns>
-        [HttpDelete("{codTrabajo}")]
         [Authorize(Policy = "Administrador")]
+        [HttpDelete("{codTrabajo}")]
         public async Task<IActionResult> Eliminar([FromRoute] int codTrabajo)
         {
             var result = await _unitOfWork.TrabajoRepository.Eliminar(codTrabajo);

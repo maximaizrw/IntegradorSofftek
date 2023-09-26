@@ -56,7 +56,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddAuthorization(option =>
 {
     option.AddPolicy("Administrador", policy =>
-
     {
         policy.RequireClaim(ClaimTypes.Role, "1");
     });

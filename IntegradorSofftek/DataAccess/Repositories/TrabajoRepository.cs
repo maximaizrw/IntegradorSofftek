@@ -12,7 +12,7 @@ namespace IntegradorSofftek.DataAccess.Repositories
         }
 
         //Metodo para obtener trabajos con las tablas servicio y proyecto asociada
-        public async Task<IEnumerable<Trabajo>> ObtenerTrabajos()
+        public async Task<IEnumerable<Trabajo>> GetAll()
         {
             List<Trabajo> listaTrabajos = new List<Trabajo>();
             listaTrabajos= await _context.Trabajos.Include(x => x.Servicio).Include(x => x.Proyecto).ToListAsync();

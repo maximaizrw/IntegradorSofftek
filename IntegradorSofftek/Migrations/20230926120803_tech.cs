@@ -139,8 +139,8 @@ namespace IntegradorSofftek.Migrations
                 columns: new[] { "rol_id", "rol_activo", "rol_descripcion", "rol_nombre" },
                 values: new object[,]
                 {
-                    { 1, true, "Admin", "Admin" },
-                    { 2, true, "Consulta", "Consulta" }
+                    { 1, true, "Administrador", "Administrador" },
+                    { 2, true, "Consultor", "Consultor" }
                 });
 
             migrationBuilder.InsertData(
@@ -155,27 +155,30 @@ namespace IntegradorSofftek.Migrations
             migrationBuilder.InsertData(
                 table: "Proyectos",
                 columns: new[] { "CodProyecto", "Direccion", "EstadoId", "Nombre" },
-                values: new object[] { 1, "Direccion 1", 1, "Proyecto 1" });
-
-            migrationBuilder.InsertData(
-                table: "Proyectos",
-                columns: new[] { "CodProyecto", "Direccion", "EstadoId", "Nombre" },
-                values: new object[] { 2, "Direccion 2", 2, "Proyecto 2" });
+                values: new object[,]
+                {
+                    { 1, "Direccion 1", 1, "Proyecto 1" },
+                    { 2, "Direccion 2", 2, "Proyecto 2" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "CodUsuario", "Clave", "Dni", "Nombre", "RolId" },
-                values: new object[] { 1, "cb096c1ca77084ae25d67db3826eba376c48cf53aa308e30ccf52179628f88e8", 1234, "admin", 1 });
+                values: new object[,]
+                {
+                    { 1, "cb096c1ca77084ae25d67db3826eba376c48cf53aa308e30ccf52179628f88e8", 1234, "admin", 1 },
+                    { 2, "1a46b1050c114b9b93e9b47547b1316c7ae52b233591ffc3a5c0c2030e9d78a7", 12345, "consultor", 2 }
+                });
 
             migrationBuilder.InsertData(
                 table: "Trabajos",
                 columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 25, 11, 35, 15, 327, DateTimeKind.Local).AddTicks(5107), 10000m });
+                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 26, 9, 8, 3, 181, DateTimeKind.Local).AddTicks(5569), 10000m });
 
             migrationBuilder.InsertData(
                 table: "Trabajos",
                 columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 25, 11, 35, 15, 327, DateTimeKind.Local).AddTicks(5119), 20000m });
+                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 26, 9, 8, 3, 181, DateTimeKind.Local).AddTicks(5581), 20000m });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Proyectos_EstadoId",

@@ -16,6 +16,14 @@ namespace IntegradorSofftek.DataAccess.DatabaseSeeding
                     Dni = 1234,
                     Clave = PasswordEncryptHelper.EncryptPassword("1234",1234),
                     RolId = 1
+                },
+                new Usuario
+                {
+                    CodUsuario = 2,
+                    Nombre = "consultor",
+                    Dni = 12345,
+                    Clave = PasswordEncryptHelper.EncryptPassword("12345",12345),
+                    RolId = 2
                 }
                 );
 

@@ -130,15 +130,15 @@ namespace IntegradorSofftek.Migrations
                         {
                             Id = 1,
                             Activo = true,
-                            Descripcion = "Admin",
-                            Nombre = "Admin"
+                            Descripcion = "Administrador",
+                            Nombre = "Administrador"
                         },
                         new
                         {
                             Id = 2,
                             Activo = true,
-                            Descripcion = "Consulta",
-                            Nombre = "Consulta"
+                            Descripcion = "Consultor",
+                            Nombre = "Consultor"
                         });
                 });
 
@@ -220,7 +220,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 10,
                             CodProyecto = 1,
                             CodServicio = 1,
-                            Fecha = new DateTime(2023, 9, 25, 11, 35, 15, 327, DateTimeKind.Local).AddTicks(5107),
+                            Fecha = new DateTime(2023, 9, 26, 9, 8, 3, 181, DateTimeKind.Local).AddTicks(5569),
                             ValorHora = 10000m
                         },
                         new
@@ -229,7 +229,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 20,
                             CodProyecto = 2,
                             CodServicio = 2,
-                            Fecha = new DateTime(2023, 9, 25, 11, 35, 15, 327, DateTimeKind.Local).AddTicks(5119),
+                            Fecha = new DateTime(2023, 9, 26, 9, 8, 3, 181, DateTimeKind.Local).AddTicks(5581),
                             ValorHora = 20000m
                         });
                 });
@@ -270,6 +270,14 @@ namespace IntegradorSofftek.Migrations
                             Dni = 1234,
                             Nombre = "admin",
                             RolId = 1
+                        },
+                        new
+                        {
+                            CodUsuario = 2,
+                            Clave = "1a46b1050c114b9b93e9b47547b1316c7ae52b233591ffc3a5c0c2030e9d78a7",
+                            Dni = 12345,
+                            Nombre = "consultor",
+                            RolId = 2
                         });
                 });
 
