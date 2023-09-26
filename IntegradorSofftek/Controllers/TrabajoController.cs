@@ -46,6 +46,10 @@ namespace IntegradorSofftek.Controllers
         [HttpGet("{codTrabajo}")]
         public async Task<IActionResult> ObtenerTrabajo([FromRoute] int codTrabajo)
         {
+            if (!await _unitOfWork.TrabajoRepository.TrabajoExist(codTrabajo))
+            {
+                return ResponseFactory.CreateErrorResponse(403, "No se encontró el trabajo.");
+            }
             var trabajo = await _unitOfWork.TrabajoRepository.ObtenerTrabajo(codTrabajo);
             return ResponseFactory.CreateSuccessResponse(200, trabajo);
         }
@@ -59,6 +63,14 @@ namespace IntegradorSofftek.Controllers
         [HttpPost]
         public async Task<IActionResult> Insertar(TrabajoDTO dto)
         {
+            if (!await _unitOfWork.ServicioRepository.ServicioExist(dto.CodServicio))
+            {
+                return ResponseFactory.CreateErrorResponse(403, "El servicio ingresado no existe.");
+            }
+            if (!await _unitOfWork.ProyectoRepository.ProyectoExist(dto.CodProyecto))
+            {
+                return ResponseFactory.CreateErrorResponse(403, "El proyecto ingresado no existe.");
+            }
             var trabajo = new Trabajo(dto);
             await _unitOfWork.TrabajoRepository.Insertar(trabajo);
             await _unitOfWork.Complete();
@@ -75,6 +87,14 @@ namespace IntegradorSofftek.Controllers
         [HttpPut("{codTrabajo}")]
         public async Task<IActionResult> Modificar([FromRoute] int codTrabajo, TrabajoDTO dto)
         {
+            if (!await _unitOfWork.ServicioRepository.ServicioExist(dto.CodServicio))
+            {
+                return ResponseFactory.CreateErrorResponse(403, "El servicio ingresado no existe.");
+            }
+            if (!await _unitOfWork.ProyectoRepository.ProyectoExist(dto.CodProyecto))
+            {
+                return ResponseFactory.CreateErrorResponse(403, "El proyecto ingresado no existe.");
+            }
             var trabajo = new Trabajo(dto, codTrabajo);
             var result = await _unitOfWork.TrabajoRepository.Modificar(trabajo);
             if (!result)

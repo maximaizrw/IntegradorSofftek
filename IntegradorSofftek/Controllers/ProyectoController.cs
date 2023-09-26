@@ -1,4 +1,5 @@
 ﻿using IntegradorSofftek.DTOs;
+using IntegradorSofftek.Helpers;
 using IntegradorSofftek.Infraestructure;
 using IntegradorSofftek.Models;
 using IntegradorSofftek.Services;
@@ -19,14 +20,19 @@ namespace IntegradorSofftek.Controllers
         }
 
         /// <summary>
-        /// Obtiene todos los proyectos.
+        /// Obtiene todos los proyectos con paginado.
         /// </summary>
         /// <returns>Una lista de todos los proyectos.</returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var proyectos = await _unitOfWork.ProyectoRepository.GetAll();
-            return ResponseFactory.CreateSuccessResponse(200, proyectos);
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateProyectos = PaginateHelper.Paginate<Proyecto>((List<Proyecto>)proyectos, pageToShow, url);
+            return ResponseFactory.CreateSuccessResponse(200, paginateProyectos);
         }
 
         /// <summary>
@@ -34,14 +40,14 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="codProyecto">El ID del proyecto que se desea obtener.</param>
         /// <returns>El proyecto correspondiente al ID proporcionado.</returns>
+        [Authorize]
         [HttpGet("{codProyecto}")]
         public async Task<IActionResult> GetById([FromRoute] int codProyecto)
         {
             var proyecto = await _unitOfWork.ProyectoRepository.GetById(codProyecto);
-            if (proyecto == null)
-            {
-                return ResponseFactory.CreateErrorResponse(500, "No se encontró el proyecto.");
-            }
+
+            if (proyecto == null) return ResponseFactory.CreateErrorResponse(404, "No se encontro el proyecto");
+
             return ResponseFactory.CreateSuccessResponse(200, proyecto);
         }
 
@@ -50,16 +56,24 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="estadoId">El ID del estado de los proyectos que se desean obtener.</param>
         /// <returns>Una lista de proyectos que tienen el estado correspondiente al ID proporcionado.</returns>
+        [Authorize]
         [HttpGet("estado/{estadoId}")]
         public async Task<IActionResult> GetByEstado([FromRoute] int estadoId)
         {
-            var proyectos = await _unitOfWork.ProyectoRepository.GetByEstado(estadoId);
-            if (proyectos == null)
+            if (!await _unitOfWork.EstadoProyectoRepository.EstadoExist(estadoId))
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se encontraron proyectos con ese estado.");
+                return ResponseFactory.CreateErrorResponse(404, "El estado ingresado no existe");
             }
-            return ResponseFactory.CreateSuccessResponse(200, proyectos);
+            var proyectos = await _unitOfWork.ProyectoRepository.GetByEstado(estadoId);
+            int pageToShow = 1;
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateProyectos = PaginateHelper.Paginate(proyectos.ToList(), pageToShow, url);
+
+            return ResponseFactory.CreateSuccessResponse(200, paginateProyectos);
         }
+
+
 
         /// <summary>
         /// Inserta un nuevo proyecto.
@@ -70,6 +84,10 @@ namespace IntegradorSofftek.Controllers
         [HttpPost]
         public async Task<IActionResult> Insert(ProyectoDTO dto)
         {
+            if (!await _unitOfWork.EstadoProyectoRepository.EstadoExist(dto.EstadoId))
+            {
+                return ResponseFactory.CreateErrorResponse(404, "El estado ingresado no existe");
+            }
             var proyecto = new Proyecto(dto);
             await _unitOfWork.ProyectoRepository.Insertar(proyecto);
             await _unitOfWork.Complete();
@@ -86,6 +104,10 @@ namespace IntegradorSofftek.Controllers
         [HttpPut("{codProyecto}")]
         public async Task<IActionResult> Modificar([FromRoute] int codProyecto, ProyectoDTO dto)
         {
+            if (!await _unitOfWork.EstadoProyectoRepository.EstadoExist(dto.EstadoId))
+            {
+                return ResponseFactory.CreateErrorResponse(404, "El estado ingresado no existe");
+            }
             var proyecto = new Proyecto(dto, codProyecto);
             var result = await _unitOfWork.ProyectoRepository.Modificar(proyecto);
             if (!result)

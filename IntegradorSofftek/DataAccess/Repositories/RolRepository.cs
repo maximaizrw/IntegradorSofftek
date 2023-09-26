@@ -28,11 +28,15 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
         public override async Task<bool> Eliminar(int id)
         {
-            var Rol = await _context.Roles.Where(x => x.Id == id).FirstOrDefaultAsync();
-            if (Rol != null)
-                _context.Roles.Remove(Rol);
-
-            return true;
+            var rol = await _context.Roles.FindAsync(id);
+            if (rol != null)
+            {
+                _context.Roles.Remove(rol);
+                await _context.SaveChangesAsync();
+                return true; 
+            }
+            return false;
         }
+
     }
 }

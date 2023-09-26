@@ -31,11 +31,21 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
         public override async Task<bool> Eliminar(int codServicio)
         {
-            var servicio = await _context.Servicios.Where(x => x.CodServicio == codServicio).FirstOrDefaultAsync();
+            var servicio = await _context.Servicios.FindAsync(codServicio);
             if (servicio != null)
+            {
                 _context.Servicios.Remove(servicio);
+                await _context.SaveChangesAsync();
+                return true; 
+            }
 
-            return true;
+            return false; 
+        }
+
+
+        public async Task<bool> ServicioExist(int codServicio)
+        {
+            return await _context.Servicios.AnyAsync(x => x.CodServicio == codServicio);
         }
     }
 }
