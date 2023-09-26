@@ -11,6 +11,7 @@ namespace IntegradorSofftek.Services
         public ServicioRepository ServicioRepository { get; private set; }
         public ProyectoRepository ProyectoRepository { get; private set; }
         public TrabajoRepository TrabajoRepository { get; private set; }
+        public EstadoProyectoRepository EstadoProyectoRepository { get; private set; }
 
         public UnitOfWorkService(ApplicationDbContext context)
         {
@@ -20,6 +21,7 @@ namespace IntegradorSofftek.Services
             ServicioRepository = new ServicioRepository(_context);
             ProyectoRepository = new ProyectoRepository(_context);
             TrabajoRepository = new TrabajoRepository(_context);
+            EstadoProyectoRepository = new EstadoProyectoRepository(_context);
         }
 
         public Task<int> Complete()

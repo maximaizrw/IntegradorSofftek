@@ -9,6 +9,7 @@ namespace IntegradorSofftek.Services
         public ServicioRepository ServicioRepository { get; }
         public ProyectoRepository ProyectoRepository { get; }
         public TrabajoRepository TrabajoRepository { get; }
+        public EstadoProyectoRepository EstadoProyectoRepository { get; }
 
         Task<int> Complete();
     }

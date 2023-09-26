@@ -48,10 +48,5 @@ namespace IntegradorSofftek.DataAccess.Repositories
             return await _context.Usuarios.AnyAsync(x => x.Dni == dni);
         }
 
-        //Obtener tablas asociadas
-
-
-
-
     }
 }

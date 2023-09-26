@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegradorSofftek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230926120803_tech")]
+    [Migration("20230926154430_tech")]
     partial class tech
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -222,7 +222,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 10,
                             CodProyecto = 1,
                             CodServicio = 1,
-                            Fecha = new DateTime(2023, 9, 26, 9, 8, 3, 181, DateTimeKind.Local).AddTicks(5569),
+                            Fecha = new DateTime(2023, 9, 26, 12, 44, 30, 231, DateTimeKind.Local).AddTicks(3601),
                             ValorHora = 10000m
                         },
                         new
@@ -231,7 +231,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 20,
                             CodProyecto = 2,
                             CodServicio = 2,
-                            Fecha = new DateTime(2023, 9, 26, 9, 8, 3, 181, DateTimeKind.Local).AddTicks(5581),
+                            Fecha = new DateTime(2023, 9, 26, 12, 44, 30, 231, DateTimeKind.Local).AddTicks(3612),
                             ValorHora = 20000m
                         });
                 });

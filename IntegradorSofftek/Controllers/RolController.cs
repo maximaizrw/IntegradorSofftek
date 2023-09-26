@@ -64,7 +64,7 @@ namespace IntegradorSofftek.Controllers
             var result = await _unitOfWork.RolRepository.Modificar(rol);
             if (!result)
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se encontró el rol.");
+                return ResponseFactory.CreateErrorResponse(404, "No se encontró el rol.");
             }
             await _unitOfWork.Complete();
 
@@ -83,7 +83,7 @@ namespace IntegradorSofftek.Controllers
             var result = await _unitOfWork.RolRepository.Eliminar(id);
             if (!result)
             {
-                return ResponseFactory.CreateErrorResponse(500, "No se encontró el rol.");
+                return ResponseFactory.CreateErrorResponse(404, "No se encontró el rol.");
             }
             await _unitOfWork.Complete();
             return ResponseFactory.CreateSuccessResponse(200, "Rol eliminado con éxito.");

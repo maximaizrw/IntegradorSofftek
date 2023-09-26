@@ -21,16 +21,18 @@ namespace IntegradorSofftek.DataAccess.Repositories
         {
             Proyecto proyecto = new Proyecto();
             proyecto = await _context.Proyectos.Include(x => x.EstadoProyecto).FirstOrDefaultAsync(x => x.CodProyecto == codProyecto);
+
             return proyecto;
         }   
 
-        // Obtener proyectos filtrando por estado
+
         public async Task<IEnumerable<Proyecto>> GetByEstado(int estadoId)
         {
             List<Proyecto> listaProyectos = new List<Proyecto>();
             listaProyectos = await _context.Proyectos.Include(x => x.EstadoProyecto).Where(x => x.EstadoId == estadoId).ToListAsync();
             return listaProyectos;
         }
+        
 
         public override async Task<bool> Modificar(Proyecto modificarProyecto)
         {
@@ -48,11 +50,20 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
         public override async Task<bool> Eliminar(int codProyecto)
         {
-            var Proyecto = await _context.Proyectos.Where(x => x.CodProyecto == codProyecto).FirstOrDefaultAsync();
-            if (Proyecto != null)
-                _context.Proyectos.Remove(Proyecto);
+            var proyecto = await _context.Proyectos.FindAsync(codProyecto);
+            if (proyecto != null)
+            {
+                _context.Proyectos.Remove(proyecto);
+                await _context.SaveChangesAsync();
+                return true;
+            }
 
-            return true;
+            return false; 
+        }
+
+        public async Task<bool> ProyectoExist(int codProyecto)
+        {
+            return await _context.Proyectos.AnyAsync(x => x.CodProyecto == codProyecto);
         }
 
     }

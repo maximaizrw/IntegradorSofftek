@@ -27,6 +27,11 @@ namespace IntegradorSofftek.DataAccess.Repositories
             return trabajo;
         }
 
+        public async Task<bool> TrabajoExist(int codTrabajo)
+        {
+            return await _context.Trabajos.AnyAsync(x => x.CodTrabajo == codTrabajo);
+        }
+
         public override async Task<bool> Modificar(Trabajo modificarTrabajo)
         {
             var trabajo = await _context.Trabajos.FirstOrDefaultAsync(x => x.CodTrabajo == modificarTrabajo.CodTrabajo);
