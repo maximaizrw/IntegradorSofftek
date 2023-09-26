@@ -14,15 +14,15 @@ namespace Umsa.DataAccess.DatabaseSeeding
                 new Rol
                 {
                     Id = 1,
-                    Nombre = "Admin",
-                    Descripcion = "Admin",
+                    Nombre = "Administrador",
+                    Descripcion = "Administrador",
                     Activo = true,
                 },
                 new Rol
                 {
                     Id = 2,
-                    Nombre = "Consulta",
-                    Descripcion = "Consulta",
+                    Nombre = "Consultor",
+                    Descripcion = "Consultor",
                     Activo = true,
                 });
         }

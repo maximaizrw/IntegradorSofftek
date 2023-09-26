@@ -1,4 +1,5 @@
 ﻿using IntegradorSofftek.DTOs;
+using IntegradorSofftek.Helpers;
 using IntegradorSofftek.Infraestructure;
 using IntegradorSofftek.Models;
 using IntegradorSofftek.Services;
@@ -19,15 +20,22 @@ namespace IntegradorSofftek.Controllers
         }
 
         /// <summary>
-        /// Devuelve todos los usuarios registrados
+        /// Obtiene todos los usuarios registrados de manera paginada.
         /// </summary>
-        /// <returns>retorna todos los usuarios</returns>
+        /// <returns>Una lista paginada de usuarios.</returns>
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAll();
+            int pageToShow = 1;
 
-            return ResponseFactory.CreateSuccessResponse(200, usuarios);
+            if(Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString(); 
+
+            var paginateUsers = PaginateHelper.Paginate(usuarios, pageToShow, url);
+            return ResponseFactory.CreateSuccessResponse(200, paginateUsers);
         }
 
         /// <summary>
@@ -51,9 +59,8 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns>retorna un mensaje de exito o error</returns>
-        [HttpPost]
-        [Route("Registrar")]
         [Authorize(Policy = "Administrador")]
+        [HttpPost]
         public async Task<IActionResult> Registro(RegistroDTO dto)
         {
             if (await _unitOfWork.UsuarioRepository.UserExist(dto.Dni)) return ResponseFactory.CreateErrorResponse(409, $"Ya existe un usuario registrado con el dni: {dto.Dni}");
@@ -69,8 +76,8 @@ namespace IntegradorSofftek.Controllers
         /// <param name="codUsuario"></param>
         /// <param name="dto"></param>
         /// <returns>retorna un mensaje de exito o error</returns>
-        [HttpPut("{codUsuario}")]
         [Authorize(Policy = "Administrador")]
+        [HttpPut("{codUsuario}")]
         public async Task<IActionResult> Modificar([FromRoute] int codUsuario, RegistroDTO dto)
         {
             var result = await _unitOfWork.UsuarioRepository.Modificar(new Usuario(dto, codUsuario));
@@ -86,8 +93,8 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <param name="codUsuario"></param>
         /// <returns>retorna un mensaje de exito o error</returns>
-        [HttpDelete("{codUsuario}")]
         [Authorize(Policy = "Administrador")]
+        [HttpDelete("{codUsuario}")]
         public async Task<IActionResult> Eliminar([FromRoute] int codUsuario)
         {
             var result = await _unitOfWork.UsuarioRepository.Eliminar(codUsuario);
