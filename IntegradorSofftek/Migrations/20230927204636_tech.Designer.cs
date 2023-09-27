@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IntegradorSofftek.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230927165830_tech")]
+    [Migration("20230927204636_tech")]
     partial class tech
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,9 @@ namespace IntegradorSofftek.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CodProyecto"), 1L, 1);
 
+                    b.Property<bool>("Activo")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Direccion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -87,6 +90,7 @@ namespace IntegradorSofftek.Migrations
                         new
                         {
                             CodProyecto = 1,
+                            Activo = true,
                             Direccion = "Direccion 1",
                             EstadoId = 1,
                             Nombre = "Proyecto 1"
@@ -94,6 +98,7 @@ namespace IntegradorSofftek.Migrations
                         new
                         {
                             CodProyecto = 2,
+                            Activo = true,
                             Direccion = "Direccion 2",
                             EstadoId = 2,
                             Nombre = "Proyecto 2"
@@ -222,7 +227,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 10,
                             CodProyecto = 1,
                             CodServicio = 1,
-                            Fecha = new DateTime(2023, 9, 27, 13, 58, 30, 161, DateTimeKind.Local).AddTicks(9361),
+                            Fecha = new DateTime(2023, 9, 27, 17, 46, 35, 816, DateTimeKind.Local).AddTicks(5276),
                             ValorHora = 10000m
                         },
                         new
@@ -231,7 +236,7 @@ namespace IntegradorSofftek.Migrations
                             CantHoras = 20,
                             CodProyecto = 2,
                             CodServicio = 2,
-                            Fecha = new DateTime(2023, 9, 27, 13, 58, 30, 161, DateTimeKind.Local).AddTicks(9374),
+                            Fecha = new DateTime(2023, 9, 27, 17, 46, 35, 816, DateTimeKind.Local).AddTicks(5294),
                             ValorHora = 20000m
                         });
                 });

@@ -127,6 +127,11 @@ namespace IntegradorSofftek.Controllers
         [HttpDelete("{codProyecto}")]
         public async Task<IActionResult> Eliminar([FromRoute] int codProyecto)
         {
+            if (!await _unitOfWork.ProyectoRepository.ProyectoIsActive(codProyecto))
+            {
+                return ResponseFactory.CreateErrorResponse(404, "El proyecto ya se encuentra inactivo");
+            }
+
             var result = await _unitOfWork.ProyectoRepository.Eliminar(codProyecto);
             if (!result)
             {

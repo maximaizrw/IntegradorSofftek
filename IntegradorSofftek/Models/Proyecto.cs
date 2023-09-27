@@ -12,6 +12,7 @@ namespace IntegradorSofftek.Models
         {
             Nombre = dto.Nombre;
             Direccion = dto.Direccion;
+            Activo = true;
             EstadoId = dto.EstadoId;
         }
 
@@ -30,6 +31,7 @@ namespace IntegradorSofftek.Models
         public string Nombre { get; set; }
         [Required]
         public string Direccion { get; set; }
+        public bool Activo { get; set; }
         [Required]
         [Column(TypeName = "int")]
         public int EstadoId { get; set; }

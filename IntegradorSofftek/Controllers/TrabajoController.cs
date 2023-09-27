@@ -67,9 +67,17 @@ namespace IntegradorSofftek.Controllers
             {
                 return ResponseFactory.CreateErrorResponse(403, "El servicio ingresado no existe.");
             }
+            if (!await _unitOfWork.ServicioRepository.ServicioIsActive(dto.CodServicio))
+            {
+                return ResponseFactory.CreateErrorResponse(403, "El servicio ingresado no esta activo actualmente.");
+            }
             if (!await _unitOfWork.ProyectoRepository.ProyectoExist(dto.CodProyecto))
             {
                 return ResponseFactory.CreateErrorResponse(403, "El proyecto ingresado no existe.");
+            }
+            if (!await _unitOfWork.ProyectoRepository.ProyectoIsActive(dto.CodProyecto))
+            {
+                return ResponseFactory.CreateErrorResponse(403, "El proyecto ingresado no esta activo actualmente.");
             }
             var trabajo = new Trabajo(dto);
             await _unitOfWork.TrabajoRepository.Insertar(trabajo);

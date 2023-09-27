@@ -29,23 +29,31 @@ namespace IntegradorSofftek.DataAccess.Repositories
             return true;
         }
 
+        //Metodo eliminar, solo se debe cambiar el estado a false, no eliminar de la base de datos, verificar si esta activo antes de eliminar
         public override async Task<bool> Eliminar(int codServicio)
         {
-            var servicio = await _context.Servicios.FindAsync(codServicio);
-            if (servicio != null)
-            {
-                _context.Servicios.Remove(servicio);
-                await _context.SaveChangesAsync();
-                return true; 
-            }
+            var servicio = await _context.Servicios.FirstOrDefaultAsync(x => x.CodServicio == codServicio);
+            if (servicio == null)
+                return false;
 
-            return false; 
+            servicio.Estado = false;
+
+            _context.Servicios.Update(servicio);
+            return true;
         }
+
+
 
 
         public async Task<bool> ServicioExist(int codServicio)
         {
             return await _context.Servicios.AnyAsync(x => x.CodServicio == codServicio);
+        }
+
+       //Metodo ServicioIsActive, verifica que el servicio este activo
+        public async Task<bool> ServicioIsActive(int codServicio)
+        {
+            return await _context.Servicios.AnyAsync(x => x.CodServicio == codServicio && x.Estado == true);
         }
     }
 }
