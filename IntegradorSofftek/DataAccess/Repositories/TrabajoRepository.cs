@@ -15,7 +15,7 @@ namespace IntegradorSofftek.DataAccess.Repositories
         public async Task<IEnumerable<Trabajo>> GetAll()
         {
             List<Trabajo> listaTrabajos = new List<Trabajo>();
-            listaTrabajos= await _context.Trabajos.Include(x => x.Servicio).Include(x => x.Proyecto).ToListAsync();
+            listaTrabajos = await _context.Trabajos.Include(x => x.Servicio).Include(x => x.Proyecto).ToListAsync();
             return listaTrabajos;
         }
 
@@ -46,16 +46,23 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
             _context.Trabajos.Update(trabajo);
             return true;
+
         }
 
         public override async Task<bool> Eliminar(int codTrabajo)
         {
             var trabajo = await _context.Trabajos.Where(x => x.CodTrabajo == codTrabajo).FirstOrDefaultAsync();
             if (trabajo != null)
+            {
                 _context.Trabajos.Remove(trabajo);
-
-            return true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
+
     }
+
+
 }

@@ -25,7 +25,7 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <returns>Una lista de todos los servicios.</returns>
         [Authorize]
-        [HttpGet("GetAll")]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             var servicios = await _unitOfWork.ServicioRepository.GetAll();
@@ -41,7 +41,7 @@ namespace IntegradorSofftek.Controllers
         /// </summary>
         /// <returns>Una lista de todos los servicios activos.</returns>
         [Authorize]
-        [HttpGet("GetAllActivos")]
+        [HttpGet("Activos")]
         public async Task<IActionResult> GetAllActivos()
         {
             var servicios = await _unitOfWork.ServicioRepository.GetAllActivos();

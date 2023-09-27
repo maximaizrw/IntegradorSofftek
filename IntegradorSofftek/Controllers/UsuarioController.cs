@@ -29,10 +29,10 @@ namespace IntegradorSofftek.Controllers
         {
             var usuarios = await _unitOfWork.UsuarioRepository.GetAll();
             int pageToShow = 1;
-            if(Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
-            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString(); 
-            var paginateUsers = PaginateHelper.Paginate(usuarios, pageToShow, url);
-            return ResponseFactory.CreateSuccessResponse(200, paginateUsers);
+            if (Request.Query.ContainsKey("page")) int.TryParse(Request.Query["page"], out pageToShow);
+            var url = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}").ToString();
+            var paginateUsuarios = PaginateHelper.Paginate<Usuario>((List<Usuario>)usuarios, pageToShow, url);
+            return ResponseFactory.CreateSuccessResponse(200, paginateUsuarios);
         }
 
         /// <summary>

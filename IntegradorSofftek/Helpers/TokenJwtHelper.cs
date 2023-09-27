@@ -31,7 +31,7 @@ namespace IntegradorSofftek.Helpers
 
             var securityToken = new JwtSecurityToken(
                 claims: claims,
-                expires: System.DateTime.Now.AddMinutes(120),
+                expires: System.DateTime.Now.AddDays(20),
                 signingCredentials: credentials
                 );
 
