@@ -60,6 +60,7 @@ namespace IntegradorSofftek.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "VARCHAR (100)", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Activo = table.Column<bool>(type: "bit", nullable: false),
                     EstadoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -154,11 +155,11 @@ namespace IntegradorSofftek.Migrations
 
             migrationBuilder.InsertData(
                 table: "Proyectos",
-                columns: new[] { "CodProyecto", "Direccion", "EstadoId", "Nombre" },
+                columns: new[] { "CodProyecto", "Activo", "Direccion", "EstadoId", "Nombre" },
                 values: new object[,]
                 {
-                    { 1, "Direccion 1", 1, "Proyecto 1" },
-                    { 2, "Direccion 2", 2, "Proyecto 2" }
+                    { 1, true, "Direccion 1", 1, "Proyecto 1" },
+                    { 2, true, "Direccion 2", 2, "Proyecto 2" }
                 });
 
             migrationBuilder.InsertData(
@@ -173,12 +174,12 @@ namespace IntegradorSofftek.Migrations
             migrationBuilder.InsertData(
                 table: "Trabajos",
                 columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 27, 13, 58, 30, 161, DateTimeKind.Local).AddTicks(9361), 10000m });
+                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 27, 17, 46, 35, 816, DateTimeKind.Local).AddTicks(5276), 10000m });
 
             migrationBuilder.InsertData(
                 table: "Trabajos",
                 columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 27, 13, 58, 30, 161, DateTimeKind.Local).AddTicks(9374), 20000m });
+                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 27, 17, 46, 35, 816, DateTimeKind.Local).AddTicks(5294), 20000m });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Proyectos_EstadoId",

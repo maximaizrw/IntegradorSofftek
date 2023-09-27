@@ -114,13 +114,17 @@ namespace IntegradorSofftek.Controllers
         [HttpDelete("{codServicio}")]
         public async Task<IActionResult> Eliminar([FromRoute] int codServicio)
         {
+            if (!await _unitOfWork.ServicioRepository.ServicioIsActive(codServicio))
+            {
+                return ResponseFactory.CreateErrorResponse(403, "El servicio ya se encuentra inactivo.");
+            }
             var result = await _unitOfWork.ServicioRepository.Eliminar(codServicio);
             if (!result)
             {
                 return ResponseFactory.CreateErrorResponse(500, "No se encontró el servicio.");
             }
             await _unitOfWork.Complete();
-            return ResponseFactory.CreateSuccessResponse(200, "Servicio eliminado con éxito.");
+            return ResponseFactory.CreateSuccessResponse(200, "Servicio dado de baja con éxito.");
         }
     }
 }

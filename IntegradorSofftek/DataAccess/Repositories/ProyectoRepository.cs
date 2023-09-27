@@ -48,12 +48,13 @@ namespace IntegradorSofftek.DataAccess.Repositories
             return true;
         }
 
-        public override async Task<bool> Eliminar(int codProyecto)
+        public async Task<bool> Eliminar(int codProyecto)
         {
             var proyecto = await _context.Proyectos.FindAsync(codProyecto);
             if (proyecto != null)
             {
-                _context.Proyectos.Remove(proyecto);
+                proyecto.Activo = false;
+                _context.Proyectos.Update(proyecto);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -64,6 +65,11 @@ namespace IntegradorSofftek.DataAccess.Repositories
         public async Task<bool> ProyectoExist(int codProyecto)
         {
             return await _context.Proyectos.AnyAsync(x => x.CodProyecto == codProyecto);
+        }
+
+        public async Task<bool> ProyectoIsActive(int codProyecto)
+        {
+            return await _context.Proyectos.AnyAsync(x => x.CodProyecto == codProyecto && x.Activo == true);
         }
 
     }
