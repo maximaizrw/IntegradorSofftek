@@ -173,12 +173,12 @@ namespace IntegradorSofftek.Migrations
             migrationBuilder.InsertData(
                 table: "Trabajos",
                 columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 26, 12, 44, 30, 231, DateTimeKind.Local).AddTicks(3601), 10000m });
+                values: new object[] { 1, 10, 1, 1, new DateTime(2023, 9, 27, 13, 58, 30, 161, DateTimeKind.Local).AddTicks(9361), 10000m });
 
             migrationBuilder.InsertData(
                 table: "Trabajos",
                 columns: new[] { "CodTrabajo", "CantHoras", "CodProyecto", "CodServicio", "fecha", "ValorHora" },
-                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 26, 12, 44, 30, 231, DateTimeKind.Local).AddTicks(3612), 20000m });
+                values: new object[] { 2, 20, 2, 2, new DateTime(2023, 9, 27, 13, 58, 30, 161, DateTimeKind.Local).AddTicks(9374), 20000m });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Proyectos_EstadoId",

@@ -14,6 +14,22 @@ namespace IntegradorSofftek.DataAccess.Repositories
 
         }
 
+        public async Task<IEnumerable<Usuario>> GetAll()
+        {
+            List<Usuario> listaUsuarios = new List<Usuario>();
+            listaUsuarios = await _context.Usuarios.Include(x => x.Rol).ToListAsync();
+            return listaUsuarios;
+        }
+
+        //Metodo GetById incluyendo el rol del usuario
+        public async Task<Usuario> GetById(int codUsuario)
+        {
+            Usuario usuario = new Usuario();
+            usuario = await _context.Usuarios.Include(x => x.Rol).FirstOrDefaultAsync(x => x.CodUsuario == codUsuario);
+
+            return usuario;
+        }
+
         public override async Task<bool> Modificar(Usuario modificarUsuario)
         {
             var usuario = await _context.Usuarios.FirstOrDefaultAsync(x => x.CodUsuario == modificarUsuario.CodUsuario);
@@ -32,10 +48,12 @@ namespace IntegradorSofftek.DataAccess.Repositories
         {
             var usuario = await _context.Usuarios.Where(x => x.CodUsuario == codUsuario).FirstOrDefaultAsync();
             if (usuario != null)
+            {
                 _context.Usuarios.Remove(usuario);
-
-
-            return true;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         public async Task<Usuario?> AuthenticateCredentials(AuthenticateDTO dto)
