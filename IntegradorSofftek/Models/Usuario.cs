@@ -1,17 +1,46 @@
-﻿namespace IntegradorSofftek.Models
+﻿using IntegradorSofftek.DTOs;
+using IntegradorSofftek.Helpers;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
+
+namespace IntegradorSofftek.Models
 {
     public class Usuario
     {
-        public int CodUsuario { get; set; }
-        public string Nombre { get; set; }
-        public int Dni { get; set; }
-        public TipoUsuario Tipo { get; set; }
-        public string Clave { get; set; }
-    }
+        public Usuario(RegistroDTO dto)
+        {
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            RolId = 2;
+            Clave = PasswordEncryptHelper.EncryptPassword(dto.Clave, dto.Dni);
+        }
 
-    public enum TipoUsuario
-    {
-        Administrador = 1,
-        Consultor = 2
+        public Usuario(RegistroDTO dto, int codUsuario)
+        {
+            CodUsuario = codUsuario;
+            Nombre = dto.Nombre;
+            Dni = dto.Dni;
+            RolId = dto.RolId;
+            Clave = PasswordEncryptHelper.EncryptPassword(dto.Clave, dto.Dni);
+        }
+        public Usuario() { }
+
+        [Key]
+        public int CodUsuario { get; set; }
+        [Required]
+        [Column(TypeName = "VARCHAR (100)")]
+        public string Nombre { get; set; }
+        [Required]
+        [Column(TypeName = "int")]
+        public int Dni { get; set; }
+        [Required]
+        [Column(TypeName = "VARCHAR (250)")]
+
+        public string Clave { get; set; }
+        [Required]
+        public int RolId { get; set; }
+        [ForeignKey("RolId")]
+        public Rol? Rol { get; set; }
     }
 }
